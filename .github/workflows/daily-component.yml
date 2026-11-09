@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  models: read
 
 concurrency:
   group: daily-component
@@ -25,7 +24,9 @@ jobs:
       - name: Generate next component
         id: gen
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
         run: python scripts/generate_component.py
       - name: Run full test suite
         if: steps.gen.outputs.message != ''
