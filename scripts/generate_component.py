@@ -42,31 +42,50 @@ def next_item() -> tuple[str, str, str, int] | None:
     return None
 
 
-def chat(system: str, user: str, attempts: int = 3) -> str:
+MODELS = [MODEL] + [m for m in ("openai/gpt-4.1", "openai/gpt-4o", "openai/gpt-4o-mini")
+                    if m != MODEL]
+
+
+def _call(model: str, system: str, user: str) -> str:
     body = json.dumps({
-        "model": MODEL,
+        "model": model,
         "temperature": 0.2,
+        "stream": False,
         "messages": [{"role": "system", "content": system},
                      {"role": "user", "content": user}],
     }).encode()
     req = urllib.request.Request(ENDPOINT, data=body, headers={
         "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
         "Content-Type": "application/json",
-        "Accept": "application/vnd.github+json",
+        "Accept": "application/json",
         "X-GitHub-Api-Version": "2022-11-28",
     })
-    for n in range(attempts):
-        try:
-            with urllib.request.urlopen(req, timeout=180) as r:
-                return json.load(r)["choices"][0]["message"]["content"]
-        except urllib.error.HTTPError as e:
-            detail = e.read().decode(errors="replace")[:500]
-            print(f"model call failed ({e.code}): {detail}", file=sys.stderr)
-            if n == attempts - 1:
-                raise
-            import time
-            time.sleep(30 * (n + 1))
-    raise RuntimeError("unreachable")
+    with urllib.request.urlopen(req, timeout=180) as r:
+        raw = r.read().decode(errors="replace")
+        status, ctype = r.status, r.headers.get("Content-Type")
+    try:
+        return json.loads(raw)["choices"][0]["message"]["content"]
+    except (ValueError, KeyError, IndexError):
+        raise RuntimeError(f"unexpected response {status} {ctype}: {raw[:500]!r}")
+
+
+def chat(system: str, user: str) -> str:
+    import time
+    errors = []
+    for model in MODELS:
+        for n in range(2):
+            try:
+                text = _call(model, system, user)
+                print(f"[model ok: {model}]")
+                return text
+            except urllib.error.HTTPError as e:
+                detail = e.read().decode(errors="replace")[:300]
+                errors.append(f"{model}: HTTP {e.code} {detail}")
+            except Exception as e:  # noqa: BLE001 - log and try the next option
+                errors.append(f"{model}: {e}")
+            print(errors[-1], file=sys.stderr)
+            time.sleep(20)
+    raise RuntimeError("all model calls failed:\n" + "\n".join(errors))
 
 
 def strip_fences(text: str) -> str:
