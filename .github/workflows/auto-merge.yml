@@ -1,0 +1,53 @@
+name: auto-merge
+
+# When a feat/* branch is pushed (by Grok or anyone): run the tests and, if
+# they pass, squash-merge it into main and delete the branch. If they fail,
+# nothing is merged; the next push to the branch triggers a new attempt.
+on:
+  push:
+    branches: ["feat/**"]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: "feat/* branch to test and merge"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-merge
+  cancel-in-progress: false
+
+jobs:
+  test-and-merge:
+    runs-on: ubuntu-latest
+    env:
+      BRANCH: ${{ inputs.branch || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements-dev.txt
+
+      - name: Test the branch
+        run: pytest
+
+      - name: Squash-merge into main
+        run: |
+          case "$BRANCH" in feat/*) ;; *) echo "not a feat/ branch"; exit 1;; esac
+          git config user.name "Dawit Abdisa"
+          git config user.email "105408779+Helloworldceo@users.noreply.github.com"
+          title=$(git log -1 --format=%s "origin/$BRANCH")
+          git checkout main
+          git pull --ff-only origin main
+          git merge --squash "origin/$BRANCH"
+          git diff --cached --quiet && { echo "nothing to merge"; git push origin --delete "$BRANCH"; exit 0; }
+          pytest
+          git commit -m "$title" -m "Auto-merged from $BRANCH after tests passed."
+          git push origin main
+          git push origin --delete "$BRANCH"
