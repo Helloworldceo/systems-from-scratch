@@ -1,7 +1,7 @@
 """Build the next BACKLOG.md component with an LLM, test it, and record it.
 
-Runs inside GitHub Actions and uses GitHub Models through the built-in
-GITHUB_TOKEN, so no extra API key is needed. Steps:
+Runs inside GitHub Actions. Needs a GEMINI_API_KEY (free tier) or
+DEEPSEEK_API_KEY repo secret; optional LLM_MODEL overrides the model. Steps:
   1. Pick the first unticked backlog item without a "(skipped" note.
   2. Generate the implementation, the tests and the README (one call each).
   3. Run pytest; if it fails, send the error back for a fix (up to 2 times).
@@ -24,8 +24,6 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 BACKLOG = ROOT / "BACKLOG.md"
 README = ROOT / "README.md"
 EXAMPLE = ROOT / "components" / "lru_cache"
-MODEL = os.environ.get("MODEL", "openai/gpt-4.1")
-ENDPOINT = "https://models.github.ai/inference/chat/completions"
 MAX_FIXES = 2
 
 ITEM_RE = re.compile(r"^- \[ \] (?P<title>.+?) — `(?P<name>[a-z0-9_]+)`\s*$")
@@ -42,11 +40,27 @@ def next_item() -> tuple[str, str, str, int] | None:
     return None
 
 
-MODELS = [MODEL] + [m for m in ("openai/gpt-4.1", "openai/gpt-4o", "openai/gpt-4o-mini")
-                    if m != MODEL]
+# OpenAI-compatible providers, used in this order when their key is set.
+PROVIDERS = [
+    ("GEMINI_API_KEY", "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions",
+     ["gemini-2.5-flash", "gemini-flash-latest"]),
+    ("DEEPSEEK_API_KEY", "https://api.deepseek.com/chat/completions", ["deepseek-chat"]),
+]
 
 
-def _call(model: str, system: str, user: str) -> str:
+def _targets() -> list[tuple[str, str, str]]:
+    custom = os.environ.get("LLM_MODEL")
+    out = []
+    for env, url, models in PROVIDERS:
+        key = os.environ.get(env)
+        if key:
+            out += [(url, key, m) for m in ([custom] if custom else []) + models]
+    if not out:
+        raise SystemExit("No API key: add a GEMINI_API_KEY or DEEPSEEK_API_KEY repo secret.")
+    return out
+
+
+def _call(url: str, key: str, model: str, system: str, user: str) -> str:
     body = json.dumps({
         "model": model,
         "temperature": 0.2,
@@ -54,28 +68,27 @@ def _call(model: str, system: str, user: str) -> str:
         "messages": [{"role": "system", "content": system},
                      {"role": "user", "content": user}],
     }).encode()
-    req = urllib.request.Request(ENDPOINT, data=body, headers={
-        "Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}",
+    req = urllib.request.Request(url, data=body, headers={
+        "Authorization": f"Bearer {key}",
         "Content-Type": "application/json",
         "Accept": "application/json",
-        "X-GitHub-Api-Version": "2022-11-28",
     })
-    with urllib.request.urlopen(req, timeout=180) as r:
+    with urllib.request.urlopen(req, timeout=300) as r:
         raw = r.read().decode(errors="replace")
         status, ctype = r.status, r.headers.get("Content-Type")
     try:
         return json.loads(raw)["choices"][0]["message"]["content"]
-    except (ValueError, KeyError, IndexError):
-        raise RuntimeError(f"unexpected response {status} {ctype}: {raw[:500]!r}")
+    except (ValueError, KeyError, IndexError, TypeError):
+        raise RuntimeError(f"unexpected response {status} {ctype}: {raw[:300]!r}")
 
 
 def chat(system: str, user: str) -> str:
     import time
     errors = []
-    for model in MODELS:
-        for n in range(2):
+    for url, key, model in _targets():
+        for _ in range(2):
             try:
-                text = _call(model, system, user)
+                text = _call(url, key, model, system, user)
                 print(f"[model ok: {model}]")
                 return text
             except urllib.error.HTTPError as e:
@@ -84,7 +97,7 @@ def chat(system: str, user: str) -> str:
             except Exception as e:  # noqa: BLE001 - log and try the next option
                 errors.append(f"{model}: {e}")
             print(errors[-1], file=sys.stderr)
-            time.sleep(20)
+            time.sleep(15)
     raise RuntimeError("all model calls failed:\n" + "\n".join(errors))
 
 
@@ -119,6 +132,7 @@ def set_output(message: str) -> None:
 
 
 def main() -> None:
+    _targets()  # fail fast if no API key is configured
     item = next_item()
     if item is None:
         set_output("")
