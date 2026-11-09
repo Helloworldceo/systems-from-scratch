@@ -16,6 +16,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 |---|---|---|
 | [LRU cache](components/lru_cache) | Data structures | 2026-11-09 |
 | [Rate limiter](components/rate_limiter) | Reliability | 2026-11-09 |
+| [LFU cache](components/lfu_cache) | Data structures | 2026-11-09 |
 
 ## Run the tests
 
