@@ -5,7 +5,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 ## Data structures
 - [x] LRU cache — `lru_cache`
 - [x] LFU cache — `lfu_cache`
-- [ ] Bloom filter — `bloom_filter`
+- [x] Bloom filter — `bloom_filter`
 - [ ] Trie with prefix search and autocomplete — `trie`
 - [ ] Skip list — `skip_list`
 - [ ] Consistent hashing ring with virtual nodes — `consistent_hashing`
