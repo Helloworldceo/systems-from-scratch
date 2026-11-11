@@ -18,6 +18,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Rate limiter](components/rate_limiter) | Reliability | 2026-11-09 |
 | [LFU cache](components/lfu_cache) | Data structures | 2026-11-09 |
 | [Bloom filter](components/bloom_filter) | Data structures | 2026-11-10 |
+| [Trie](components/trie) | Data structures | 2026-11-11 |
 
 ## Run the tests
 
