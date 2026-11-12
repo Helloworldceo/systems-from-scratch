@@ -7,7 +7,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 - [x] LFU cache — `lfu_cache`
 - [x] Bloom filter — `bloom_filter`
 - [x] Trie with prefix search and autocomplete — `trie`
-- [ ] Skip list — `skip_list`
+- [x] Skip list — `skip_list`
 - [ ] Consistent hashing ring with virtual nodes — `consistent_hashing`
 - [ ] Min-heap priority queue with decrease-key — `priority_queue`
 - [ ] Union-find (disjoint set) — `union_find`

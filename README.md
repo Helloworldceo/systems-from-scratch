@@ -19,6 +19,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [LFU cache](components/lfu_cache) | Data structures | 2026-11-09 |
 | [Bloom filter](components/bloom_filter) | Data structures | 2026-11-10 |
 | [Trie](components/trie) | Data structures | 2026-11-11 |
+| [Skip list](components/skip_list) | Data structures | 2026-11-12 |
 
 ## Run the tests
 
