@@ -1,5 +1,7 @@
 # Systems From Scratch
 
+[![tests](https://github.com/Helloworldceo/systems-from-scratch/actions/workflows/tests.yml/badge.svg)](https://github.com/Helloworldceo/systems-from-scratch/actions/workflows/tests.yml)
+
 Core building blocks of real software, implemented from scratch in Python with tests and
 design notes: caches, rate limiters, queues, storage engines and distributed-systems protocols.
 
