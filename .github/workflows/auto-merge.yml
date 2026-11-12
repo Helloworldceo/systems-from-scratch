@@ -1,7 +1,9 @@
 name: auto-merge
 
 # When a feat/* branch is pushed (by Grok or anyone): run the tests and, if
-# they pass, squash-merge it into main and delete the branch. If they fail,
+# they pass, merge it into main and delete the branch. With a PR_TOKEN secret
+# (your personal access token) it opens and squash-merges a pull request as
+# you; without one it squash-merges directly. If they fail,
 # nothing is merged; the next push to the branch triggers a new attempt.
 on:
   push:
@@ -24,6 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       BRANCH: ${{ inputs.branch || github.ref_name }}
+      HAS_PR_TOKEN: ${{ secrets.PR_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -37,7 +40,22 @@ jobs:
       - name: Test the branch
         run: pytest
 
-      - name: Squash-merge into main
+      - name: Merge via pull request (counts toward Pull Shark)
+        if: env.HAS_PR_TOKEN == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.PR_TOKEN }}
+        run: |
+          case "$BRANCH" in feat/*) ;; *) echo "not a feat/ branch"; exit 1;; esac
+          title=$(git log -1 --format=%s "origin/$BRANCH")
+          pr=$(gh pr list --head "$BRANCH" --state open --json number -q '.[0].number')
+          if [ -z "$pr" ]; then
+            gh pr create --base main --head "$BRANCH" --title "$title" \
+              --body "Daily component from BACKLOG.md. Tests passed in the auto-merge workflow."
+          fi
+          gh pr merge "$BRANCH" --squash --delete-branch --subject "$title"
+
+      - name: Squash-merge into main (no PR token set)
+        if: env.HAS_PR_TOKEN != 'true'
         run: |
           case "$BRANCH" in feat/*) ;; *) echo "not a feat/ branch"; exit 1;; esac
           git config user.name "Dawit Abdisa"
