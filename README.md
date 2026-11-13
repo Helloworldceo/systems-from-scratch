@@ -22,6 +22,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Bloom filter](components/bloom_filter) | Data structures | 2026-11-10 |
 | [Trie](components/trie) | Data structures | 2026-11-11 |
 | [Skip list](components/skip_list) | Data structures | 2026-11-12 |
+| [Consistent hashing](components/consistent_hashing) | Data structures | 2026-11-13 |
 
 ## Run the tests
 
