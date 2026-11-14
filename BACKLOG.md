@@ -9,7 +9,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 - [x] Trie with prefix search and autocomplete — `trie`
 - [x] Skip list — `skip_list`
 - [x] Consistent hashing ring with virtual nodes — `consistent_hashing`
-- [ ] Min-heap priority queue with decrease-key — `priority_queue`
+- [x] Min-heap priority queue with decrease-key — `priority_queue`
 - [ ] Union-find (disjoint set) — `union_find`
 
 ## Reliability

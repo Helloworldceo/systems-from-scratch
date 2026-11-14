@@ -23,6 +23,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Trie](components/trie) | Data structures | 2026-11-11 |
 | [Skip list](components/skip_list) | Data structures | 2026-11-12 |
 | [Consistent hashing](components/consistent_hashing) | Data structures | 2026-11-13 |
+| [Priority queue](components/priority_queue) | Data structures | 2026-11-14 |
 
 ## Run the tests
 
