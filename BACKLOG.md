@@ -10,7 +10,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 - [x] Skip list — `skip_list`
 - [x] Consistent hashing ring with virtual nodes — `consistent_hashing`
 - [x] Min-heap priority queue with decrease-key — `priority_queue`
-- [ ] Union-find (disjoint set) — `union_find`
+- [x] Union-find (disjoint set) — `union_find`
 
 ## Reliability
 - [x] Rate limiter (token bucket, sliding window log) — `rate_limiter`
