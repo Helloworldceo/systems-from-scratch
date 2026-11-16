@@ -25,6 +25,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Consistent hashing](components/consistent_hashing) | Data structures | 2026-11-13 |
 | [Priority queue](components/priority_queue) | Data structures | 2026-11-14 |
 | [Union-Find](components/union_find) | Data structures | 2026-11-15 |
+| [Retry with backoff](components/retry_backoff) | Reliability | 2026-11-16 |
 
 ## Run the tests
 
