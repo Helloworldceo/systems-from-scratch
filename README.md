@@ -26,6 +26,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Priority queue](components/priority_queue) | Data structures | 2026-11-14 |
 | [Union-Find](components/union_find) | Data structures | 2026-11-15 |
 | [Retry with backoff](components/retry_backoff) | Reliability | 2026-11-16 |
+| [Circuit breaker](components/circuit_breaker) | Reliability | 2026-11-17 |
 
 ## Run the tests
 
