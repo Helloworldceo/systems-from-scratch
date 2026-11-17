@@ -15,7 +15,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 ## Reliability
 - [x] Rate limiter (token bucket, sliding window log) — `rate_limiter`
 - [x] Retry with exponential backoff and jitter — `retry_backoff`
-- [ ] Circuit breaker (closed / open / half-open) — `circuit_breaker`
+- [x] Circuit breaker (closed / open / half-open) — `circuit_breaker`
 - [ ] Bulkhead (concurrency limiter) — `bulkhead`
 - [ ] Timeout and deadline propagation — `deadlines`
 - [ ] Health checker with liveness and readiness — `health_check`
