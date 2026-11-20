@@ -29,6 +29,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Circuit breaker](components/circuit_breaker) | Reliability | 2026-11-17 |
 | [Bulkhead](components/bulkhead) | Reliability | 2026-11-18 |
 | [Timeout and deadline propagation](components/deadlines) | Reliability | 2026-11-19 |
+| [Health checker](components/health_check) | Reliability | 2026-11-20 |
 
 ## Run the tests
 
