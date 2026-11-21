@@ -21,7 +21,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 - [x] Health checker with liveness and readiness — `health_check`
 
 ## Backend
-- [ ] HTTP router with path parameters — `http_router`
+- [x] HTTP router with path parameters — `http_router`
 - [ ] Middleware chain — `middleware`
 - [ ] URL shortener (base62, collision handling) — `url_shortener`
 - [ ] Session store with TTL — `session_store`
