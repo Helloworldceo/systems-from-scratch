@@ -31,6 +31,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Timeout and deadline propagation](components/deadlines) | Reliability | 2026-11-19 |
 | [Health checker](components/health_check) | Reliability | 2026-11-20 |
 | [HTTP router](components/http_router) | Backend | 2026-11-21 |
+| [Middleware chain](components/middleware) | Backend | 2026-11-22 |
 
 ## Run the tests
 
