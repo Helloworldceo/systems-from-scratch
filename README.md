@@ -32,6 +32,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Health checker](components/health_check) | Reliability | 2026-11-20 |
 | [HTTP router](components/http_router) | Backend | 2026-11-21 |
 | [Middleware chain](components/middleware) | Backend | 2026-11-22 |
+| [URL shortener](components/url_shortener) | Backend | 2026-11-23 |
 
 ## Run the tests
 
