@@ -23,7 +23,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 ## Backend
 - [x] HTTP router with path parameters — `http_router`
 - [x] Middleware chain — `middleware`
-- [ ] URL shortener (base62, collision handling) — `url_shortener`
+- [x] URL shortener (base62, collision handling) — `url_shortener`
 - [ ] Session store with TTL — `session_store`
 - [ ] Connection pool — `connection_pool`
 - [ ] Idempotency-key handler — `idempotency`
