@@ -24,7 +24,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 - [x] HTTP router with path parameters — `http_router`
 - [x] Middleware chain — `middleware`
 - [x] URL shortener (base62, collision handling) — `url_shortener`
-- [ ] Session store with TTL — `session_store`
+- [x] Session store with TTL — `session_store`
 - [ ] Connection pool — `connection_pool`
 - [ ] Idempotency-key handler — `idempotency`
 - [ ] Pagination (offset and cursor) — `pagination`

@@ -33,6 +33,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [HTTP router](components/http_router) | Backend | 2026-11-21 |
 | [Middleware chain](components/middleware) | Backend | 2026-11-22 |
 | [URL shortener](components/url_shortener) | Backend | 2026-11-23 |
+| [Session store](components/session_store) | Backend | 2026-11-24 |
 
 ## Run the tests
 
