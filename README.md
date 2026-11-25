@@ -34,6 +34,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Middleware chain](components/middleware) | Backend | 2026-11-22 |
 | [URL shortener](components/url_shortener) | Backend | 2026-11-23 |
 | [Session store](components/session_store) | Backend | 2026-11-24 |
+| [Connection pool](components/connection_pool) | Backend | 2026-11-25 |
 
 ## Run the tests
 
