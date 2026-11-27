@@ -36,6 +36,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Session store](components/session_store) | Backend | 2026-11-24 |
 | [Connection pool](components/connection_pool) | Backend | 2026-11-25 |
 | [Idempotency-key handler](components/idempotency) | Backend | 2026-11-26 |
+| [Pagination](components/pagination) | Backend | 2026-11-27 |
 
 ## Run the tests
 
