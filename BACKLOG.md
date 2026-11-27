@@ -27,7 +27,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 - [x] Session store with TTL — `session_store`
 - [x] Connection pool — `connection_pool`
 - [x] Idempotency-key handler — `idempotency`
-- [ ] Pagination (offset and cursor) — `pagination`
+- [x] Pagination (offset and cursor) — `pagination`
 - [ ] JWT encode/verify (HS256, standard library only) — `jwt_lite`
 
 ## Concurrency
