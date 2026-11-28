@@ -37,6 +37,7 @@ A new component is added most days, following [`BACKLOG.md`](BACKLOG.md).
 | [Connection pool](components/connection_pool) | Backend | 2026-11-25 |
 | [Idempotency-key handler](components/idempotency) | Backend | 2026-11-26 |
 | [Pagination](components/pagination) | Backend | 2026-11-27 |
+| [JWT lite](components/jwt_lite) | Backend | 2026-11-28 |
 
 ## Run the tests
 
