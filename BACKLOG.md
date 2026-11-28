@@ -31,7 +31,7 @@ Work top to bottom. Tick an item (`[x]`) in the same PR that adds it.
 - [x] JWT encode/verify (HS256, standard library only) — `jwt_lite`
 
 ## Concurrency
-- [ ] Thread pool — `thread_pool`
+- [x] Thread pool — `thread_pool`
 - [ ] Job queue with workers and retries — `job_queue`
 - [ ] Pub/sub event bus — `event_bus`
 - [ ] Read-write lock — `rw_lock`
